@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>JEE PILOT</title>
+    <link rel="stylesheet" href="{{ url_for("static", filename="style.css")}}">
+  </head>
+  <body>
+    <header class="header">
+        <h1> JEE-PILOT </h1>
+        <nav>
+            {% if user %}
+            <span> Hi, {{user}} </span>
+            <a href="{{url_for("logout")}}" class="btn btn-logout"> LOGOUT</a>
+            {% else %}
+            <a href="{{url_for("login")}}" class="btn btn-login"> LOGIN </a>
+            <a href="{{url_for("signup")}}" class="btn btn-signup"> SIGNUP </a>
+            {% endif %}
+        </nav>
+    </header>
+    
+    <section class="hero">
+        <h2> YOUR COMPLETE AI-POWERED JEE PREPARATION COMPANION </h2>
+        <P> AI-Powered learning | Smart Quizzes | Rank Predictor | Study Analytics | College Predictor </P>
+        <a href="{{url_for("signup")}}" class="btn btn-signup"> GET STARTED </a>
+    </section>
+
+    <section class="feature-section">
+    <h2 class="feature-heading">PLATFORM FEATURES</h2>
+
+  <div class="feature-grid">
+    <div class="card">
+      <div class="icon">📊</div>
+      <h3>Performance Analysis</h3>
+      <p>Track accuracy, progress, and weak topics with analytics.</p>
+    </div>
+
+    <div class="card">
+      <div class="icon">🧠</div>
+      <h3>AI Study Assistant</h3>
+      <p>Get instant AI-based solutions to your doubts.</p>
+    </div>
+
+    <div class="card">
+      <div class="icon">📚</div>
+      <h3>Personalized Study Plan</h3>
+      <p>Generate daily AI-planned schedules automatically.</p>
+    </div>
+
+    <div class="card">
+      <div class="icon">🏆</div>
+      <h3>Rank Prediction</h3>
+      <p>Predict your JEE rank using advanced ML models.</p>
+    </div>
+
+    <div class="card">
+      <div class="icon">🏛️</div>
+      <h3>College Recommender</h3>
+      <p>Find best-fit colleges with fee and cutoff details.</p>
+    </div>
+
+    <div class="card">
+      <div class="icon">🤖</div>
+      <h3>AI Doubt Solver</h3>
+      <p>Ask anything and get step-by-step AI explanations.</p>
+    </div>
+  </div>
+</section>
+
+
+  </body>
+  </html>

@@ -1,0 +1,387 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(120deg, #e0f7fa, #fce4ec);
+  font-family: "Poppins", sans-serif;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+  background-color: white;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+.btn {
+  margin: 0 10px;
+  padding: 10px 20px;
+  border-radius: 30px;
+  border: none;
+  text-decoration: none;
+  color: white;
+  background: #007bff;
+  transition: 0.3s;
+}
+.btn:hover {
+  background: #0056b3;
+}
+.hero {
+  text-align: center;
+  padding: 80px 20px;
+}
+.hero h2 {
+  font-size: 3rem;
+  font-weight: 700;
+}
+/* ===== FEATURE SECTION ===== */
+.feature-section {
+    background: linear-gradient(120deg, #f8fbff, #ffffff);
+    padding: 70px 20px;
+    text-align: center;
+}
+
+.feature-heading {
+    font-size: 2.2em;
+    font-weight: 700;
+    color: #007bff;
+    margin-bottom: 45px;
+}
+
+/* --- GRID CONTAINER --- */
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px; /* Adds visible space between boxes */
+    justify-content: center;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* --- INDIVIDUAL FEATURE BOXES --- */
+.card {
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 20px 15px; /* smaller internal padding for compact size */
+    width: 90%;          /* reduces overall box width */
+    height: 180px;       /* makes boxes smaller vertically */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s ease;
+    cursor: pointer;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* --- ICONS & TEXT --- */
+.icon {
+    font-size: 35px;
+    margin-bottom: 10px;
+    color: #007bff;
+    transition: transform 0.3s ease;
+}
+
+.card h3 {
+    font-size: 1.1em;
+    color: #007bff;
+    margin-bottom: 8px;
+}
+
+.card p {
+    font-size: 0.85em;
+    color: #444;
+    line-height: 1.3em;
+}
+
+/* --- HOVER EFFECT --- */
+.card:hover {
+    transform: translateY(-6px) scale(1.04);
+    box-shadow: 0 6px 18px rgba(0, 123, 255, 0.25);
+    background: linear-gradient(135deg, #e3f2fd, #f1f8ff);
+}
+
+.card:hover .icon {
+    transform: scale(1.15);
+}
+
+/* --- RESPONSIVE LAYOUT --- */
+@media (max-width: 950px) {
+    .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+}
+
+@media (max-width: 600px) {
+    .feature-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+}
+
+/* ----------LOGIN/SIGNUP STYLING----------- */
+.container {
+    max-width: 600px;
+    margin: 80px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    text-align: center;
+}
+input[type="text"], input[type="password"] {
+    width: 80%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #dcdde1;
+    font-size: 16px;
+}
+input[type="text"]:focus, input[type="password"]:focus {
+    border-color: #4cd137;
+    outline: none;
+}
+/* Links */
+a {
+    color: #4cd137;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+button {
+    background-color: #4cd137;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s ease;
+    text-decoration: none;
+    margin-bottom: 20px;
+    
+    
+}
+
+button:hover, .btn:hover {
+    background-color: #44bd32;
+}
+
+/* -----------FOR QUIZZES.HTML----------- */
+
+.quiz-page {
+  max-width: 900px;
+  margin: 50px auto;
+  background: #fff;
+  padding: 30px 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* Title */
+.page-title {
+  text-align: center;
+  font-size: 36px;
+  font-weight: 900;
+  color: #000;
+  margin-bottom: 40px;
+}
+
+/* Filter Section */
+.filter-container {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.filter-container h3 {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.subject-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.subject-btn {
+  text-decoration: none;
+  color: #000;
+  background-color: #5ce6ea;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+
+.subject-btn:hover {
+  background-color: #3dd2d7;
+}
+
+.subject-btn.active {
+  background-color: #000;
+  color: #fff;
+}
+
+/* Quiz List */
+.quiz-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Quiz Box */
+.quiz-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 20px 25px;
+  border-radius: 16px;
+  transition: 0.3s ease;
+  border: 1px solid #e5e5e5;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.quiz-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.quiz-info h3 {
+  font-size: 20px;
+  font-weight: 800;
+  color: #000;
+  margin: 0;
+}
+
+.quiz-info p {
+  color: #000;
+  font-weight: 500;
+  margin-top: 5px;
+}
+
+/* Attempt Button */
+.attempt-btn {
+  background-color: #000;
+  color: #fff;
+  font-weight: 700;
+  padding: 10px 18px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.attempt-btn:hover {
+  background-color: #1a1a1a;
+}
+
+/* No quizzes found */
+.no-quizzes {
+  text-align: center;
+  font-size: 18px;
+  color: #444;
+  margin-top: 20px;
+}
+.logout-btn {
+  background-color: #5ce6ea;
+  color: #000;
+  text-decoration: none;
+  font-weight: 700;
+  font-style: italic;
+  padding: 6px 14px;
+  border-radius: 10px;
+  transition: 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #47d2d7;
+  transform: scale(1.05);
+}
+
+/* -------------FOR RANK AND PERCENTILE PREDICTOR--------------- */
+
+.predictor-container {
+    background: #ffffff;
+    color: #333;
+    max-width: 480px;
+    margin: 80px auto;
+    padding: 30px 40px;
+    border-radius: 16px;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    transition: transform 0.2s ease-in-out;
+}
+
+.predictor-container:hover {
+    transform: translateY(-4px);
+}
+
+.predictor-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #007bff;
+    margin-bottom: 25px;
+}
+
+.predictor-form label {
+    font-weight: 600;
+    font-size: 16px;
+    color: #444;
+}
+
+.predictor-input {
+    width: 80%;
+    padding: 10px;
+    margin: 12px 0;
+    border: 2px solid #007bff;
+    border-radius: 10px;
+    outline: none;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.predictor-input:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.4);
+}
+
+.predictor-button {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 10px;
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.predictor-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.predictor-result {
+    margin-top: 25px;
+    text-align: center;
+}
+
+.predictor-rank {
+    font-size: 30px;
+    color: #28a745;
+    font-weight: 700;
+}
+
+.predictor-error {
+    color: #dc3545;
+    font-weight: 600;
+}

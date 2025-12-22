@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>College Predictor | JEE Pilot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='college_predictor.css') }}">
+    <script>
+        async function updateFilters() {
+            const type = document.getElementById("institute_type").value;
+            const response = await fetch("/college_recommender_filters", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ institute_type: type })
+            });
+            const data = await response.json();
+
+            function populate(selectId, values) {
+                const select = document.getElementById(selectId);
+                select.innerHTML = "<option value='All'>All</option>";
+                values.forEach(v => {
+                    const option = document.createElement("option");
+                    option.value = v;
+                    option.textContent = v;
+                    select.appendChild(option);
+                });
+            }
+
+            populate("state", data.states);
+            populate("seat_type", data.seat_types);
+            populate("gender", data.genders);
+            populate("program", data.programs);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 College Recommender (JEE Pilot)</h1>
+
+        <form method="POST">
+            <div class="filter-group">
+                <label>Institute Type: <span style="color:red">*</span></label>
+                <select id="institute_type" name="institute_type" required onchange="updateFilters()">
+                    <option value="">Select Institute Type</option>
+                    {% for i in institute_types %}
+                        <option value="{{ i }}">{{ i }}</option>
+                    {% endfor %}
+                </select>
+
+                <label>State:</label>
+                <select id="state" name="state">
+                    <option value="All">All</option>
+                </select>
+
+                <label>Seat Type:</label>
+                <select id="seat_type" name="seat_type">
+                    <option value="All">All</option>
+                </select>
+
+                <label>Gender:</label>
+                <select id="gender" name="gender">
+                    <option value="All">All</option>
+                </select>
+
+                <label>Program:</label>
+                <select id="program" name="program">
+                    <option value="All">All</option>
+                </select>
+
+                
+                <button type="submit">Recommend Colleges</button>
+            </div>
+        </form>
+
+        {% if message %}
+            <div class="message">{{ message|safe }}</div>
+        {% endif %}
+
+        <div class="table-container">
+            {% if table %}
+                {{ table|safe }}
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+
+{% block content %}
+
+<h2>Select Subject</h2>
+
+<p>Choose the subject for which you want to view quizzes.</p>
+
+<div style="display: flex; gap: 20px; margin-top: 30px;">
+
+    <!-- Physics -->
+    <div style="
+        padding: 30px; 
+        background: #e8f0fe; 
+        border-radius: 12px; 
+        cursor: pointer; 
+        width: 200px; 
+        text-align: center;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);"
+        onclick="location.href='{{ url_for('quizzes_by_subject', subject='Physics') }}'">
+        <h3>Physics</h3>
+    </div>
+
+    <!-- Chemistry -->
+    <div style="
+        padding: 30px; 
+        background: #ffeaea; 
+        border-radius: 12px; 
+        cursor: pointer; 
+        width: 200px; 
+        text-align: center;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);"
+        onclick="location.href='{{ url_for('quizzes_by_subject', subject='Chemistry') }}'">
+        <h3>Chemistry</h3>
+    </div>
+
+    <!-- Maths -->
+    <div style="
+        padding: 30px; 
+        background: #e9ffe8; 
+        border-radius: 12px; 
+        cursor: pointer; 
+        width: 200px; 
+        text-align: center;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);"
+        onclick="location.href='{{ url_for('quizzes_by_subject', subject='Maths') }}'">
+        <h3>Maths</h3>
+    </div>
+
+</div>
+
+{% endblock %}
