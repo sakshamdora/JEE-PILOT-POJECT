@@ -87,7 +87,9 @@ def login():
         conn.close()
 
         if user:
+            session["user_id"] = user["id"]
             session["username"] = user["username"]
+            session["name"] = user["name"]
             session["role"] = user["role"]
             if user["role"] == 'admin':
                 return redirect(url_for('admin_dashboard'))
@@ -286,7 +288,7 @@ def add_question(quiz_id):
         b = request.form["option_b"]
         c = request.form["option_c"]
         d = request.form["option_d"]
-        correct_option = request.form["correct_option"]
+        correct_option = request.form["correct_option"].lower().strip()
         integer_answer = request.form.get("integer_answer") or None
 
         db = get_db()
@@ -325,6 +327,10 @@ def submit_quiz(quiz_id):
     quiz = db.execute("SELECT * FROM quizzes WHERE quiz_id = ?", (quiz_id,)).fetchone()
     questions = db.execute("SELECT * FROM questions WHERE quiz_id = ?", (quiz_id,)).fetchall()
 
+    correct_questions = 0
+    incorrect_questions = 0
+    unattempted_questions = 0
+    attempted_questions = 0
     score = 0
     results = []
 
@@ -335,24 +341,39 @@ def submit_quiz(quiz_id):
         integer_answer = str(q['integer_answer']) if q['integer_answer'] is not None else None
         user_ans = request.form.get(f'q{i}')
        
+        if user_ans is not None:
+            user_ans = user_ans.strip().lower()
+        
+        if correct_option is not None:
+            correct_option = correct_option.strip().lower()
 
         if q['question_type'] == 'mcq':
             if user_ans == correct_option:
                 score += 4
+                correct_questions += 1
+                attempted_questions += 1
                 result = "✅ Correct (+4)"
             elif user_ans is None:
+                unattempted_questions +=1
                 result = "⚪ Not Attempted (0)"
             else:
                 score -= 1
+                incorrect_questions += 1
+                attempted_questions += 1
                 result = "❌ Wrong (-1)"
 
         elif q['question_type'] == 'integer':
             if user_ans == integer_answer:
                 score += 4
+                correct_questions +=1
+                attempted_questions += 1
                 result = "✅ Correct (+4)"
             elif user_ans == "" or user_ans is None:
+                unattempted_questions +=1
                 result = "⚪ Not Attempted (0)"
             else:
+                incorrect_questions +=1
+                attempted_questions += 1
                 result = "❌ Wrong (0)"
 
         results.append({
@@ -362,7 +383,15 @@ def submit_quiz(quiz_id):
             'result': result
         })
 
-    return render_template("USER/results.html", score=score, results=results, total=len(questions), quiz_id=quiz_id, user=session['username'])
+    total_questions = len(questions)
+    total_marks = total_questions * 4
+    accuracy = round((correct_questions / attempted_questions) * 100, 2) if attempted_questions > 0 else 0.0
+
+    db.execute("""
+        INSERT INTO user_quiz_attempts (user_id, quiz_id, score, total_marks, total_questions, correct_questions, incorrect_questions, unattempted_questions, attempted_questions,accuracy) VALUES (?,?,?,?,?,?,?,?,?,?)""", (session["user_id"], quiz_id, score, total_marks, total_questions, correct_questions, incorrect_questions, unattempted_questions, attempted_questions, accuracy))
+    db.commit()
+
+    return render_template("USER/results.html", score=score, results=results, total_questions=len(questions), quiz_id=quiz_id, user=session['username'], user_id=session["user_id"])
 
 
 
@@ -790,7 +819,10 @@ chat_history = [
 def ai_assistant():
     if 'username' not in session:
         return redirect(url_for('login'))
-    return render_template("USER/chatbot.html", user=session["username"])
+    
+    question = request.args.get("question")
+    image = request.args.get("image")
+    return render_template("USER/chatbot.html", user=session["username"], auto_question=question, auto_image=image)
 
 @app.route('/get_response', methods=['POST'])
 def get_response():
@@ -866,6 +898,50 @@ def send_feedback():
 
     return redirect("/your_feedback")
 
+## -----------PERFORMANCE ANALYSIS DASHBOARD ROUTE -----------##
+@app.route("/performance")
+def performance():
+    if "username" not in session:
+        return redirect(url_for("login"))
+    db = get_db()
+
+    attempts = db.execute("""SELECT u.quiz_id, q.title, u.score, u.total_marks, u.accuracy FROM user_quiz_attempts u
+                          JOIN quizzes q ON u.quiz_id = q.quiz_id
+                          WHERE u.user_id = ? ORDER BY u.attempt_id""",(session["user_id"],)).fetchall()
+    
+    quizzes = db.execute("""SELECT quiz_id, title FROM quizzes ORDER BY subject, quiz_id""").fetchall()
+    
+    return render_template("USER/performance_analysis.html", user=session["username"], attempts=attempts, quizzes=quizzes)
+
+@app.route("/leaderboard/<int:quiz_id>")
+def leaderboard(quiz_id):
+    db = get_db()
+
+    rows = db.execute("""
+        SELECT 
+            u.name as name,
+            MAX(ua.score) AS best_score,
+            ua.accuracy
+        FROM user_quiz_attempts ua
+        JOIN users u ON ua.user_id = u.id
+        WHERE ua.quiz_id = ?
+        GROUP BY ua.user_id
+        ORDER BY best_score DESC
+        LIMIT 10
+    """, (quiz_id,)).fetchall()
+
+    leaderboard_data = []
+    for i, row in enumerate(rows):
+        leaderboard_data.append({
+            "rank": i + 1,
+            "name": row["name"],
+            "score": row["best_score"],
+            "accuracy": row["accuracy"]
+        })
+
+    return {"leaderboard": leaderboard_data}
+
+    
 
 
 

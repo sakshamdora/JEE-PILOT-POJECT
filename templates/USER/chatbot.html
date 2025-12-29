@@ -28,6 +28,8 @@
                 <p>Your Personal Study & Support Guide</p>
             </div>
         </div>
+    
+        
 
         <div id="messageFormeight" class="card-body msg_card_body">
             <div class="d-flex justify-content-start mb-4">
@@ -56,6 +58,23 @@
         </div>
     </div>
 
+    <script>
+        function autoSolve() {
+            const textInput = document.getElementById("textInput");
+            textInput.value = "Solve this question: \n{{ auto_question}}";
+
+            // AUTO-SUBMIT THE FORM
+            document.getElementById("chatForm").dispatchEvent(new Event("submit", { cancelable: true}));
+        }
+    </script>
+    <script>
+
+        {% if auto_question %}
+        window.addEventListener("load", () => {
+            autoSolve();
+        });
+        {% endif %}
+    </script>
     <script>
         const chatForm = document.getElementById('chatForm');
         const messageArea = document.getElementById('messageFormeight');

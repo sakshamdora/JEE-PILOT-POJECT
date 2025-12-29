@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Performance Dashboard</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='performance.css') }}">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div class="dashboard-container">
+
+    <!-- ===== HEADER ===== -->
+    <header class="dashboard-header">
+        <h1>📊 Performance Analysis</h1>
+        <p>Track your quiz progress, accuracy, and improvement</p>
+    </header>
+
+    <!-- ===== SUMMARY CARDS (EXTENSIBLE) ===== -->
+    <section class="summary-cards">
+
+        <div class="card">
+            <h3>Total Quizzes</h3>
+            <p>{{ attempts | length }}</p>
+        </div>
+
+        <div class="card">
+            <h3>Average Accuracy</h3>
+            <p>
+                {{
+                    (attempts | map(attribute='accuracy') | sum / (attempts | length))
+                    if attempts | length > 0 else 0
+                | round(2) }} %
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Best Score</h3>
+            <p>
+                {{ attempts | map(attribute='score') | max if attempts else 0 }}
+            </p>
+        </div>
+
+    </section>
+
+    <!-- ===== TABLE SECTION ===== -->
+    <section class="table-section">
+        <h2>Quiz History</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Quiz</th>
+                    <th>Score</th>
+                    <th>Accuracy (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in attempts %}
+                <tr>
+                    <td>{{ a.title }}</td>
+                    <td>{{ a.score }} / {{ a.total_marks }}</td>
+                    <td>{{ a.accuracy }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <!-- ===== GRAPH SECTION ===== -->
+    <section class="graph-section">
+        <h2>Performance Trend</h2>
+        <canvas id="performanceChart"></canvas>
+    </section>
+
+    <!-- ===== LEADERBOARD SECTION ===== -->
+    <section class="leaderboard-section">
+    <h2>🏆 Quiz Leaderboard</h2>
+
+    <select id="quizSelect" onchange="loadLeaderboard()">
+        <option value="">Select a Quiz</option>
+        {% for q in quizzes %}
+        <option value="{{ q.quiz_id }}">{{ q.title }}</option>
+        {% endfor %}
+    </select>
+
+    <table id="leaderboardTable">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>User</th>
+                <th>Score</th>
+                <th>Accuracy (%)</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    </section>
+
+
+    <!-- ===== FUTURE ANALYTICS PLACEHOLDER ===== -->
+    <section class="future-section">
+        <h2>📈 More Analytics Coming</h2>
+        <p>
+            Subject-wise analysis, rank, percentile, weak-topic heatmaps,
+            and AI-generated feedback will appear here.
+        </p>
+    </section>
+
+</div>
+
+<!-- ===== CHART SCRIPT ===== -->
+<script>
+    const quizLabels = [
+        {% for a in attempts %}
+            "{{ a.title }}",
+        {% endfor %}
+    ];
+
+    const scores = [
+        {% for a in attempts %}
+            {{ a.score }},
+        {% endfor %}
+    ];
+
+    const accuracies = [
+        {% for a in attempts %}
+            {{ a.accuracy }},
+        {% endfor %}
+    ];
+
+    const ctx = document.getElementById('performanceChart').getContext('2d');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: quizLabels,
+            datasets: [
+                {
+                    label: 'Score',
+                    data: scores,
+                    tension: 0.4,
+                    fill: false
+                },
+                {
+                    label: 'Accuracy (%)',
+                    data: accuracies,
+                    tension: 0.4,
+                    fill: false
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            interaction: {
+                mode: 'index',
+                intersect: false
+            },
+            plugins: {
+                legend: {
+                    position: 'top'
+                }
+            }
+        }
+    });
+</script>
+
+<script>
+function loadLeaderboard() {
+    const quizId = document.getElementById("quizSelect").value;
+    const tbody = document.querySelector("#leaderboardTable tbody");
+
+    tbody.innerHTML = "";
+
+    if (!quizId) return;
+
+    fetch(`/leaderboard/${quizId}`)
+        .then(res => res.json())
+        .then(data => {
+            if (data.leaderboard.length === 0) {
+                tbody.innerHTML = "<tr><td colspan='4'>No attempts yet</td></tr>";
+                return;
+            }
+
+            data.leaderboard.forEach(row => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${row.rank}</td>
+                        <td>${row.name}</td>
+                        <td>${row.score}</td>
+                        <td>${row.accuracy}</td>
+                    </tr>
+                `;
+            });
+        });
+}
+</script>
+
+
+</body>
+</html>

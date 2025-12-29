@@ -80,7 +80,7 @@
         <h2>🎯 Quiz Results</h2>
 
         <div class="score-box">
-            Total Score: {{ score }} / {{ total * 4 }}
+            Total Score: {{ score }} / {{ total_questions * 4 }}
         </div>
 
         <table>
@@ -89,6 +89,7 @@
                 <th>Your Answer</th>
                 <th>Correct Answer</th>
                 <th>Result</th>
+                <th>AI-SOLUTION</th>
             </tr>
             {% for r in results %}
             <tr>
@@ -96,6 +97,13 @@
                 <td>{{ r.your_answer or '—' }}</td>
                 <td>{{ r.correct_answer }}</td>
                 <td>{{ r.result }}</td>
+                <td>
+                    <form action="{{url_for("ai_assistant") }}" method="GET">
+                        <input type="hidden" name="question" value="{{r.question}}">
+                        <input type="hidden" name="image" value="">
+                        <button class="ai-btn">🤖 AI Solution</button>
+                    </form>
+                </td>
             </tr>
             {% endfor %}
         </table>
