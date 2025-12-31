@@ -8,10 +8,10 @@ cursor = conn.cursor()
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS users (
                id INTEGER PRIMARY KEY AUTOINCREMENT,
-               username TEXT UNIQUE NOT None,
-               password TEXT NOT None,
-               name TEXT NOT None,
-               role TEXT NOT None CHECK(role IN ("user", "admin"))
+               username TEXT UNIQUE NOT NULL,
+               password TEXT NOT NULL,
+               name TEXT NOT NULL,
+               role TEXT NOT NULL CHECK(role IN ("user", "admin"))
 )
 """)
 
@@ -19,26 +19,27 @@ CREATE TABLE IF NOT EXISTS users (
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS quizzes (
                quiz_id INTEGER PRIMARY KEY AUTOINCREMENT,
-               title TEXT NOT None,
-               subject TEXT NOT None,
-               created_at TIMESTAMP DEAFULT CURRENT_TIMESTAMP,
+               title TEXT NOT NULL,
+               subject TEXT NOT NULL,
+               created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
 """)
+
 # QUESTIONS TABLE 
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS questions (
                question_id INTEGER PRIMARY KEY AUTOINCREMENT,
-               quiz_id INTEGER NOT None,
-               question_text TEXT NOT None,
-               option_a TEXT NOT None,
-               option_b TEXT NOT None,
-               option_c TEXT NOT None,
-               option_d TEXT NOT None,
+               quiz_id INTEGER NOT NULL,
+               question_text TEXT NOT NULL,
+               option_a TEXT NOT NULL,
+               option_b TEXT NOT NULL,
+               option_c TEXT NOT NULL,
+               option_d TEXT NOT NULL,
                correct_option TEXT,
                integer_answer INTEGER,
                image_path TEXT,
-               question_type TEXT NOT None,
+               question_type TEXT NOT NULL,
                FOREIGN KEY (quiz_id) REFERENCES quizzes(quiz_id) ON DELETE CASCADE
 )
 """)
@@ -342,21 +343,20 @@ cursor.executemany(
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS user_quiz_attempts (
                attempt_id INTEGER PRIMARY KEY AUTOINCREMENT,
-               user_id INTEGER NOT None,
-               quiz_id INTEGER NOT None,
-               score INTEGER NOT None,
-               total_marks INTEGER NOT None,
-               total_questions INTEGER NOT None,
-               correct_questions INTEGER NOT None,
-               incorrect_questions INTEGER NOT None,
-               unattempted_questions INTEGER NOT None,
-               attempted_questions INTEGER NOT None,
-               accuracy REAL NOT None,
+               user_id INTEGER NOT NULL,
+               quiz_id INTEGER NOT NULL,
+               score INTEGER NOT NULL,
+               total_marks INTEGER NOT NULL,
+               total_questions INTEGER NOT NULL,
+               correct_questions INTEGER NOT NULL,
+               incorrect_questions INTEGER NOT NULL,
+               unattempted_questions INTEGER NOT NULL,
+               attempted_questions INTEGER NOT NULL,
+               accuracy REAL NOT NULL,
                FOREIGN KEY (quiz_id) REFERENCES quizzes(quiz_id) ON DELETE CASCADE,
                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 )
 """)
-
 cursor.execute("""
     INSERT OR IGNORE INTO users (username, password, name, role) VALUES
 ('user01', 'pass123', 'Aarav Sharma', 'user'),
