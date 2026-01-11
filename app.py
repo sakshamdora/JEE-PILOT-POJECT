@@ -669,7 +669,7 @@ def college_predictor():
 
 ##--------------------COLLEGE RECOMMENDOR--------------------##
     
-college_data = pd.read_excel(r"C:\Users\Dell\Desktop\JEE-PILOT\college_advance_datset.xlsx")
+college_data = pd.read_excel("college_advance_datset.xlsx")
 
 @app.route("/college_recommender_filters", methods=["POST"])
 def college_recommender_filters():
