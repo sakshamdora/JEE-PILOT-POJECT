@@ -399,7 +399,7 @@ def submit_quiz(quiz_id):
 ## -------------------- RANK PREDICTION MODEL --------------------##
 
 try:
-    rank_df = pd.read_excel(r"C:\Users\Dell\Desktop\JEE-PILOT\JEE DATASET.xlsx")
+    rank_df = pd.read_excel("JEE DATASET.xlsx")
 
     # Clean column names
     rank_df.columns = rank_df.columns.str.strip().str.upper()  # Ensure RANK and PERCENTILE names
@@ -585,7 +585,7 @@ def predict_percentile():
 
 ##--------------------COLLEGE PREDICTION MODEL --------------------##
 
-college_df = pd.read_excel(r"C:\Users\Dell\Desktop\JEE-PILOT\college_advance_datset.xlsx")
+college_df = pd.read_excel("college_advance_datset.xlsx")
 
 @app.route("/college_predictor_filters", methods=["POST"])
 def college_predictor_filters():
