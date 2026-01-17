@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <script>
+    (function () {
+    const theme = localStorage.getItem("theme");
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    }
+    })();
+    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signup | JEE Pilot</title>
+
+  
+
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' }
+  </script>
+</head>
+
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-100 to-blue-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
+
+<button onclick="toggleDarkMode()" class="absolute top-6 right-6 text-xl">
+  🌙
+</button>
+
+<div class="bg-white dark:bg-gray-900 rounded-2xl shadow-xl p-10 w-full max-w-md">
+  <h2 class="text-3xl font-bold text-center text-gray-800 dark:text-gray-100 mb-8">
+    Create Your Account
+  </h2>
+
+  <form method="POST">
+    <input
+      type="text"
+      name="username"
+      placeholder="Enter Username"
+      required
+      class="input"
+    />
+
+    <input
+      type="password"
+      name="password"
+      placeholder="Enter Password"
+      required
+      class="input"
+    />
+
+    <input
+      type="text"
+      name="name"
+      placeholder="Enter Name"
+      required
+      class="input mb-6"
+    />
+
+    <button
+      type="submit"
+      class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg
+             transition font-semibold">
+      Register
+    </button>
+  </form>
+
+  <p class="text-center text-sm mt-6 text-gray-600 dark:text-gray-400">
+    Already have an account?
+    <a href="/login" class="text-green-600 hover:underline dark:text-green-400">
+      Login here
+    </a>
+  </p>
+</div>
+
+<script>
+  function toggleDarkMode() {
+    const html = document.documentElement;
+    const isDark = html.classList.toggle("dark");
+
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  }
+</script>
+
+<style>
+  .input {
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #d1d5db;
+  }
+</style>
+
+</body>
+</html>

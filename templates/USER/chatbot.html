@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JEE AI Mentor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='chatbot.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="logo">⚛️</div>
+            <div class="title">
+                <h2>JEE AI Mentor</h2>
+                <p>Your Personal Study & Support Guide</p>
+            </div>
+        </div>
+    
+        
+
+        <div id="messageFormeight" class="card-body msg_card_body">
+            <div class="d-flex justify-content-start mb-4">
+                <div class="msg_cotainer">
+                    Hello! I'm your JEE AI Assistant. 🎓<br>
+                    I can help you with Physics, Chem, Math doubts, create study plans, or just listen if you're feeling stressed.<br>
+                    <strong>Upload a question image or type below!</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <form id="chatForm" enctype="multipart/form-data">
+                <div class="input-group">
+                    <label for="imageUpload" class="upload-btn">
+                        <i class="fas fa-image"></i>
+                    </label>
+                    <input type="file" id="imageUpload" name="image" accept="image/*" style="display: none;">
+                    
+                    <div id="imagePreview" class="image-preview"></div>
+
+                    <input type="text" id="textInput" name="msg" placeholder="Type your doubt or topic..." autocomplete="off" class="form-control type_msg">
+                    <button type="submit" class="send_btn"><i class="fas fa-location-arrow"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function autoSolve() {
+            const textInput = document.getElementById("textInput");
+            textInput.value = "Solve this question: \n{{ auto_question}}";
+
+            // AUTO-SUBMIT THE FORM
+            document.getElementById("chatForm").dispatchEvent(new Event("submit", { cancelable: true}));
+        }
+    </script>
+    <script>
+
+        {% if auto_question %}
+        window.addEventListener("load", () => {
+            autoSolve();
+        });
+        {% endif %}
+    </script>
+    <script>
+        const chatForm = document.getElementById('chatForm');
+        const messageArea = document.getElementById('messageFormeight');
+        const imageInput = document.getElementById('imageUpload');
+        const imagePreview = document.getElementById('imagePreview');
+
+        // Show image preview when file is selected
+        imageInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+                    imagePreview.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            } else {
+                imagePreview.style.display = 'none';
+            }
+        });
+
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const text = document.getElementById('textInput').value;
+            const file = imageInput.files[0];
+
+            if (!text && !file) return;
+
+            // 1. Display User Message
+            const userTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            let userHtml = `<div class="d-flex justify-content-end mb-4"><div class="msg_cotainer_send">`;
+            
+            if (file) {
+                userHtml += `[Image Uploaded] <br>`;
+            }
+            userHtml += `${text} <span class="msg_time_send">${userTime}</span></div></div>`;
+            
+            messageArea.innerHTML += userHtml;
+            document.getElementById('textInput').value = '';
+            imageInput.value = ''; // clear file
+            imagePreview.style.display = 'none'; // hide preview
+            messageArea.scrollTop = messageArea.scrollHeight;
+
+            // 2. Add Loading Animation
+            const loadingId = "loading-" + Date.now();
+            const loadingHtml = `<div class="d-flex justify-content-start mb-4" id="${loadingId}">
+                <div class="msg_cotainer">
+                    <div class="typing-indicator"><span></span><span></span><span></span></div>
+                </div>
+            </div>`;
+            messageArea.innerHTML += loadingHtml;
+            messageArea.scrollTop = messageArea.scrollHeight;
+
+            // 3. Send Data to Backend
+            const formData = new FormData();
+            formData.append('msg', text);
+            if (file) {
+                formData.append('image', file);
+            }
+
+            try {
+                const response = await fetch('/get_response', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+
+                // 4. Remove Loading and Show Bot Response
+                document.getElementById(loadingId).remove();
+                
+                const botTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                
+                // Parse Markdown
+                const rawResponse = data.response;
+                const parsedResponse = marked.parse(rawResponse);
+
+                const botHtml = `<div class="d-flex justify-content-start mb-4">
+                    <div class="msg_cotainer">
+                        ${parsedResponse}
+                        <span class="msg_time">${botTime}</span>
+                    </div>
+                </div>`;
+                
+                messageArea.innerHTML += botHtml;
+                
+                // Trigger MathJax to render equations in the new content
+                MathJax.typesetPromise([messageArea]).then(() => {
+                    messageArea.scrollTop = messageArea.scrollHeight;
+                });
+
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById(loadingId).innerHTML = '<div class="msg_cotainer" style="color:red">Error connecting to server.</div>';
+            }
+        });
+    </script>
+</body>
+</html>

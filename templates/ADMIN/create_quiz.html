@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Create Quiz - JEE PILOT Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <header class="header">
+      <h1>JEE-PILOT Admin Panel</h1>
+      <nav>
+        {% if user %}
+        <span> Hi, {{ user }} </span>
+        <a href="{{ url_for('logout') }}" class="btn btn-logout"> LOGOUT </a>
+        {% else %}
+        <a href="{{ url_for('login') }}" class="btn btn-login"> LOGIN </a>
+        <a href="{{ url_for('signup') }}" class="btn btn-signup"> SIGNUP </a>
+        {% endif %}
+      </nav>
+    </header>
+
+    <div class="create-quiz-section">
+      <h2>Create New Quiz</h2>
+      <form action="{{ url_for('create_quiz') }}" method="POST" class="create-quiz-form">
+        <label for="title">Quiz Title:</label>
+        <input type="text" id="title" name="title" required /><br><br>
+
+        <label for="subject">SUBJECT:</label>
+        <textarea id="text" name="subject" required></textarea>
+
+        <button type="submit" class="btn btn-create-quiz">Create Quiz</button>
+      </form>
+    </div>
+  </body>

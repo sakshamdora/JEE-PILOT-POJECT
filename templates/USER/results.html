@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Result</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7f9fc;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .result-container {
+            max-width: 800px;
+            margin: 60px auto;
+            background: #fff;
+            padding: 30px 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #4a4efc;
+        }
+
+        .score-box {
+            background: #4a4efc;
+            color: white;
+            font-size: 22px;
+            font-weight: 600;
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        tr:hover {
+            background: #f0f2ff;
+        }
+
+        .correct { color: green; font-weight: bold; }
+        .wrong { color: red; font-weight: bold; }
+        .neutral { color: gray; font-weight: bold; }
+
+        .retry-btn {
+            display: block;
+            margin: 25px auto 0;
+            background: #4a4efc;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .retry-btn:hover {
+            background: #2f31e3;
+        }
+    </style>
+</head>
+<body>
+    <div class="result-container">
+        <h2>🎯 Quiz Results</h2>
+
+        <div class="score-box">
+            Total Score: {{ score }} / {{ total_questions * 4 }}
+        </div>
+
+        <table>
+            <tr>
+                <th>Question</th>
+                <th>Your Answer</th>
+                <th>Correct Answer</th>
+                <th>Result</th>
+                <th>AI-SOLUTION</th>
+            </tr>
+            {% for r in results %}
+            <tr>
+                <td>{{ r.question }}</td>
+                <td>{{ r.your_answer or '—' }}</td>
+                <td>{{ r.correct_answer }}</td>
+                <td>{{ r.result }}</td>
+                <td>
+                    <form action="{{url_for("ai_assistant") }}" method="GET">
+                        <input type="hidden" name="question" value="{{r.question}}">
+                        <input type="hidden" name="image" value="">
+                        <button class="ai-btn">🤖 AI Solution</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <a href="{{ url_for('study_dashboard') }}">
+            <button class="retry-btn">Try Again</button>
+        </a>
+    </div>
+</body>
+</html>

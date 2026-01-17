@@ -1,0 +1,131 @@
+/* ============================= */
+/* ADMIN – ADD QUESTION PAGE ONLY */
+/* ============================= */
+
+
+.admin-page-head {
+    max-width: 900px;
+    margin: 20px auto 10px auto;
+    padding: 10px 20px;
+}
+
+/* Main admin title */
+.admin-page-head h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 6px;
+}
+
+/* User + logout row */
+.admin-user-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: #475569;
+    margin-bottom: 18px;
+}
+
+.admin-logout {
+    color: #dc2626;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.admin-logout:hover {
+    text-decoration: underline;
+}
+
+/* Section heading */
+.admin-section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #0f172a;
+    padding-top: 12px;
+    border-top: 1px solid #e5e7eb;
+}
+
+
+.admin-add-question {
+    max-width: 760px;
+    margin: 30px auto;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Page spacing */
+.admin-add-question form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Headings */
+.admin-add-question h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Labels */
+.admin-add-question label {
+    margin-top: 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+/* Inputs */
+.admin-add-question input[type="text"],
+.admin-add-question input[type="number"],
+.admin-add-question input[type="file"],
+.admin-add-question textarea,
+.admin-add-question select {
+    margin-top: 6px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    font-size: 14px;
+    background: #f9fafb;
+}
+
+.admin-add-question textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+/* Focus */
+.admin-add-question input:focus,
+.admin-add-question textarea:focus,
+.admin-add-question select:focus {
+    outline: none;
+    border-color: #2563eb;
+    background: #ffffff;
+}
+
+/* Submit button */
+.admin-add-question button[type="submit"] {
+    margin-top: 28px;
+    padding: 12px;
+    background: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.admin-add-question button[type="submit"]:hover {
+    background: #1d4ed8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .admin-add-question {
+        margin: 20px;
+        padding: 20px;
+    }
+}

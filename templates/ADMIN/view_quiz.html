@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Attempt</title>
+    <style>
+        body {
+            background: #f7f9fc;
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .quiz-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: white;
+            padding: 30px 40px;
+            border-radius: 16px;
+            box-shadow: 0px 8px 25px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #4a4efc;
+            margin-bottom: 30px;
+        }
+
+        ol {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: #f1f3ff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            transition: 0.3s ease;
+            border: 1px solid #ddd;
+        }
+
+        li:hover {
+            transform: translateY(-2px);
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.08);
+        }
+
+        p {
+            margin-bottom: 10px;
+            font-weight: 500;
+            font-size: 17px;
+        }
+
+        img {
+            display: block;
+            max-width: 300px;
+            margin: 10px auto;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            padding: 10px;
+            margin-bottom: 8px;
+            background: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        ul li:hover {
+            background: #e8ebff;
+            border-color: #4a4efc;
+        }
+
+        ul li input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+            accent-color: #4a4efc;
+        }
+
+        .integer-question {
+            background: #fff7e6;
+            border-left: 5px solid #ffb300;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            background: #4a4efc;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 30px;
+        }
+
+        .submit-btn:hover {
+            background: #2f31e3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="quiz-container">
+        <h2>🧠 Quiz Attempt</h2>
+
+        <form action="{{ url_for('submit_quiz',quiz_id=quiz['quiz_id']) }}" method="POST">
+            <ol>
+                {% for q in questions %}
+                <li>
+                    {% if q['image_path'] %}
+                        <img src="{{ url_for('question_image', filename=q['image_path']) }}" alt="Question Image">
+                    {% endif %}
+
+                    <p><strong>Q{{ loop.index }}:</strong> {{ q['question_text'] }}</p>
+
+                    {% if q['question_type'] == 'mcq' %}
+                        <ul>
+                            <li><label><input type="radio" name="q{{ loop.index }}" value="a">A. {{ q['option_a'] }}</label></li>
+                            <li><label><input type="radio" name="q{{ loop.index }}" value="b">B. {{ q['option_b'] }}</label></li>
+                            <li><label><input type="radio" name="q{{ loop.index }}" value="c">C. {{ q['option_c'] }}</label></li>
+                            <li><label><input type="radio" name="q{{ loop.index }}" value="d">D. {{ q['option_d'] }}</label></li>
+                        </ul>
+                    {% else %}
+                        <div class="integer-question">
+                            <p><em>Enter your answer:</em></p>
+                            <input type="number" name="q{{ loop.index }}" placeholder="Enter integer answer"
+                                   style="padding:10px; width:150px; border-radius:6px; border:1px solid #ccc;">
+                        </div>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ol>
+
+            <button type="submit" class="submit-btn">Submit Quiz</button>
+        </form>
+    </div>
+</body>
+</html>

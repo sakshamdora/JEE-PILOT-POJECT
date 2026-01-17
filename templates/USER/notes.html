@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JEE-2026</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style1.css') }}">
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+    <div id="sidebar" class="sidebar">
+        <h2>MENU</h2>
+        <ul>
+    <li><a href="{{ url_for('study_dashboard') }}" class="menu-link">HOME</a></li>
+    <li><a href="{{ url_for('ai_assistant') }}" class="menu-link">AI DOUBT ASSISTANT</a></li>
+    <li><a href="{{ url_for('rank_predictor') }}" class="menu-link">RANK PREDICTOR</a></li>
+    <li><a href="{{ url_for('percentile_predictor') }}" class="menu-link">JEE MAINS PERCENTILE PREDICTOR</a></li>
+    <li><a href="{{ url_for('college_predictor') }}" class="menu-link">COLLEGE PREDICTOR</a></li>
+    <li><a href="{{ url_for('college_recommender') }}" class="menu-link">COLLEGE RECOMMENDER</a></li>
+    <li><a href="{{ url_for('your_feedback') }}" class="menu-link">YOUR VALUABLE FEEDBACK</a></li>
+    <li><a href="{{ url_for('performance') }}" class="menu-link">PERFORMANCE ANALYSIS</a></li>
+        </ul>
+
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="mainContent" class="main">
+
+        <div class="header">
+            <h1>JEE-2026</h1>
+        </div>
+
+        <div class="top-row">
+            <button id="menuBtn" class="menu-btn">&#9776;</button>
+            <h1 class="title">JEE NOTES </h1>
+        </div>
+
+        <div class="batch-grid" id="batchGrid">
+            <a href="{{ url_for('physics_notes') }}" class="box"><h3>PHYSICS</h3></a>
+            <a href="{{ url_for('chemistry_notes') }}" class="box"><h3>CHEMISTRY</h3></a>
+            <a href="{{ url_for('maths_notes') }}" class="box"><h3>MATHS</h3></a>
+            
+        </div>
+
+    </div>
+
+<script>
+    const menuBtn = document.getElementById("menuBtn");
+    const sidebar = document.getElementById("sidebar");
+    const mainContent = document.getElementById("mainContent");
+    const batchGrid = document.getElementById("batchGrid");
+
+    let sidebarOpen = false;
+
+    menuBtn.addEventListener("click", () => {
+        sidebar.classList.toggle("open");
+        sidebarOpen = !sidebarOpen;
+
+        if (sidebarOpen) {
+            mainContent.classList.add("push-right");
+            batchGrid.classList.add("two-grid");
+        } else {
+            mainContent.classList.remove("push-right");
+            batchGrid.classList.remove("two-grid");
+        }
+    });
+</script>
+
+</body>
+</html>

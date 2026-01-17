@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎯 JEE Rank Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="predictor-container">
+        <h1 class="predictor-title">🎯 JEE Rank Predictor</h1>
+
+        <form action="/rank_predictor" method="POST" class="predictor-form">
+            <label for="percentile">Enter Percentile (0–100):</label>
+            <input type="number" name="percentile" step="0.001" min="0" max="100"
+                   required placeholder="e.g. 99.876" class="predictor-input">
+            <button type="submit" class="predictor-button">Predict Rank</button>
+        </form>
+
+        {% if error %}
+            <p class="predictor-error">{{ error }}</p>
+        {% elif rank %}
+            <div class="predictor-result">
+                <h2>Predicted Rank for {{ percentile }} Percentile:</h2>
+                <p class="predictor-rank">{{ rank }}</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+

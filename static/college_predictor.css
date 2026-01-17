@@ -1,0 +1,153 @@
+/* =============================
+   🌐 GLOBAL STYLE IMPROVEMENTS
+============================= */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #0f172a;
+    color: white;
+    text-align: center;
+    padding: 30px;
+}
+
+/* 🌟 Main Container */
+.container {
+    max-width: 1200px; /* Extended width to fit full table */
+    margin: auto;
+    background: #1e293b;
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px #38bdf8;
+    transition: all 0.3s ease-in-out;
+}
+
+/* 🧭 Title */
+h1 {
+    font-size: 2em;
+    color: #38bdf8;
+    margin-bottom: 20px;
+}
+
+/* =============================
+   🧩 FORM FILTER SECTION
+============================= */
+.filter-group {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px 25px;
+    text-align: left;
+    margin-bottom: 25px;
+}
+
+label {
+    font-weight: 600;
+    font-size: 0.95em;
+    color: #e2e8f0;
+}
+
+select, input {
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    width: 100%;
+    background: #0f172a;
+    color: white;
+    outline: none;
+}
+
+button {
+    grid-column: 1 / span 2;
+    background: #38bdf8;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #0284c7;
+}
+
+/* =============================
+   📊 TABLE STYLING SECTION
+============================= */
+
+/* Wraps the table inside the main container */
+.table-container {
+    margin-top: 25px;
+    overflow-x: auto;
+    background: #0f172a;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+/* Main Table */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #0f172a;
+    color: white;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Table Header */
+.data-table th {
+    background: #38bdf8;
+    color: #0f172a;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 12px;
+    border: none;
+    text-align: center;
+}
+
+/* Table Cells */
+.data-table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #334155;
+    text-align: center;
+}
+
+/* Alternate Row Color */
+.data-table tr:nth-child(even) {
+    background: #1e293b;
+}
+
+/* Hover Effect */
+.data-table tr:hover {
+    background: #334155;
+    transition: 0.2s ease;
+}
+
+/* Rounded corners for table */
+.table-container::-webkit-scrollbar {
+    height: 8px;
+}
+.table-container::-webkit-scrollbar-thumb {
+    background-color: #38bdf8;
+    border-radius: 10px;
+}
+
+/* =============================
+   🔠 TEXT TRANSFORM RULES
+============================= */
+
+/* All text capitalize by default */
+select option, input, label, button, table {
+    text-transform: capitalize;
+}
+
+/* INSTITUTE TYPE dropdown -> uppercase */
+#institute_type option {
+    text-transform: uppercase !important;
+}
+
+/* INSTITUTE TYPE column -> uppercase */
+.data-table td:nth-child(3),
+.data-table th:nth-child(3) {
+    text-transform: uppercase !important;
+}

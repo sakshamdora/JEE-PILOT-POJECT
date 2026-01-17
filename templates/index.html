@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block title %}JEE Pilot | Home{% endblock %}
+
+{% block content %}
+
+<!-- ================= HERO SECTION ================= -->
+<section class="min-h-[80vh] flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100 dark:from-gray-800 dark:to-gray-900 px-6 text-center">
+  <div class="max-w-4xl">
+    <h2 class="text-3xl md:text-5xl font-extrabold mb-6">
+      YOUR COMPLETE AI-POWERED JEE PREPARATION COMPANION
+    </h2>
+
+    <p class="text-sm md:text-lg mb-8">
+      AI-Powered Learning | Smart Quizzes | Rank Predictor | Study Analytics | College Predictor
+    </p>
+
+    <a href="/signup"
+       class="inline-block px-8 py-3 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition text-lg">
+      Get Started
+    </a>
+  </div>
+</section>
+
+<!-- ================= FEATURES ================= -->
+<!-- PLATFORM FEATURES SECTION -->
+<section class="py-20 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <!-- Heading -->
+    <h2 class="text-center text-4xl font-extrabold text-blue-600 dark:text-blue-400 mb-16">
+      PLATFORM FEATURES
+    </h2>
+
+    <!-- Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+
+      <!-- Feature 1 -->
+      <div
+        class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-md
+               hover:shadow-2xl transition transform hover:-translate-y-2
+               text-center"
+      >
+        <div class="text-4xl mb-4">📊</div>
+        <h4 class="text-xl font-semibold text-blue-600 dark:text-blue-400 mb-2">
+          Performance Analysis
+        </h4>
+        <p class="text-sm text-gray-600 dark:text-gray-300">
+          Track accuracy, progress, and weak topics with detailed analytics.
+        </p>
+      </div>
+
+      <!-- Feature 2 -->
+      <div
+        class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-md
+               hover:shadow-2xl transition transform hover:-translate-y-2
+               text-center"
+      >
+        <div class="text-4xl mb-4">🧠</div>
+        <h4 class="text-xl font-semibold text-blue-600 dark:text-blue-400 mb-2">
+          AI Study Assistant
+        </h4>
+        <p class="text-sm text-gray-600 dark:text-gray-300">
+          Get instant AI-based solutions to your doubts anytime.
+        </p>
+      </div>
+
+      <!-- Feature 3 -->
+      <div
+        class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-md
+               hover:shadow-2xl transition transform hover:-translate-y-2
+               text-center"
+      >
+        <div class="text-4xl mb-4">📚</div>
+        <h4 class="text-xl font-semibold text-blue-600 dark:text-blue-400 mb-2">
+          Personalized Study Plan
+        </h4>
+        <p class="text-sm text-gray-600 dark:text-gray-300">
+          Generate daily AI-planned schedules automatically.
+        </p>
+      </div>
+
+      <!-- Feature 4 -->
+      <div
+        class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-md
+               hover:shadow-2xl transition transform hover:-translate-y-2
+               text-center"
+      >
+        <div class="text-4xl mb-4">🏆</div>
+        <h4 class="text-xl font-semibold text-blue-600 dark:text-blue-400 mb-2">
+          Rank Prediction
+        </h4>
+        <p class="text-sm text-gray-600 dark:text-gray-300">
+          Predict your JEE rank using advanced ML models.
+        </p>
+      </div>
+
+      <!-- Feature 5 -->
+      <div
+        class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-md
+               hover:shadow-2xl transition transform hover:-translate-y-2
+               text-center"
+      >
+        <div class="text-4xl mb-4">🏛️</div>
+        <h4 class="text-xl font-semibold text-blue-600 dark:text-blue-400 mb-2">
+          College Recommender
+        </h4>
+        <p class="text-sm text-gray-600 dark:text-gray-300">
+          Find best-fit colleges with cutoff and fee details.
+        </p>
+      </div>
+
+      <!-- Feature 6 -->
+      <div
+        class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-md
+               hover:shadow-2xl transition transform hover:-translate-y-2
+               text-center"
+      >
+        <div class="text-4xl mb-4">🤖</div>
+        <h4 class="text-xl font-semibold text-blue-600 dark:text-blue-400 mb-2">
+          AI Doubt Solver
+        </h4>
+        <p class="text-sm text-gray-600 dark:text-gray-300">
+          Ask anything and get step-by-step AI explanations.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ADD QUESTION </title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin_add_question.css') }}" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="admin-page-head">
+    <h1>JEE-PILOT Admin Panel</h1>
+
+    <div class="admin-user-row">
+        <span>Hi, {{ user }}</span>
+        <a href="{{ url_for('logout') }}" class="admin-logout">Logout</a>
+    </div>
+
+    <h2 class="admin-section-title">
+        Add Question to: {{ quiz['title'] }}
+    </h2>
+      </div>
+    </header>
+<div class="admin-add-question">
+    <form method="post" enctype="multipart/form-data">
+
+        <label>Question Text</label>
+        <textarea name="question_text" required></textarea>
+
+        <label>Question Type</label>
+        <select name="question_type" required>
+            <option value="mcq">MCQ</option>
+            <option value="integer">Integer</option>
+        </select>
+
+        <label>Option A</label>
+        <input type="text" name="option_a">
+
+        <label>Option B</label>
+        <input type="text" name="option_b">
+
+        <label>Option C</label>
+        <input type="text" name="option_c">
+
+        <label>Option D</label>
+        <input type="text" name="option_d">
+
+        <label>Correct Option (A/B/C/D)</label>
+        <input type="text" name="correct_option">
+
+        <label>Integer Answer</label>
+        <input type="number" name="integer_answer">
+
+        <label>Image (optional)</label>
+        <input type="file" name="image">
+
+        <button type="submit">Add Question</button>
+
+    </form>
+</div>
+
+</body>
+</html>

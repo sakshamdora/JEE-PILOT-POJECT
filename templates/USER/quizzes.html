@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+<div class="header">
+    <h1>JEE-2026</h1>
+    <a href="/logout" class="logout-btn"><i>LOG-OUT</i></a>
+</div>
+{% block content %}
+
+<div class="quiz-page">
+  <h2 class="page-title">
+    {% if selected_subject %}
+      {{ selected_subject|upper }} QUIZZES
+    {% else %}
+      ALL QUIZZES
+    {% endif %}
+  </h2>
+
+  {% if not selected_subject %}
+  <div class="filter-container">
+    <h3>Filter by Subject</h3>
+    <div class="subject-buttons">
+      <a href="{{ url_for('quizzes_by_subject') }}" class="subject-btn active">All</a>
+      {% for s in subjects %}
+      <a href="{{ url_for('quizzes_by_subject', subject=s['subject']) }}" class="subject-btn">
+        {{ s['subject'] }}
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="quiz-list">
+    {% if quizzes %}
+      {% for q in quizzes %}
+      <div class="quiz-box">
+        <div class="quiz-info">
+          <h3>{{ q['title'] }}</h3>
+          <p>Subject: {{ q['subject'] }}</p>
+        </div>
+        <div>
+          <a href="{{ url_for('view_quiz', quiz_id=q['quiz_id']) }}" class="attempt-btn">ATTEMPT QUIZ</a>
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+      <p class="no-quizzes">No quizzes found for this subject.</p>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
+</body>
+</html>

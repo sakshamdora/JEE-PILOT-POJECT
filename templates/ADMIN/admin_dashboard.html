@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin_style.css') }}" />
+</head>
+<body>
+    <div class="sidebar">
+        <h2>JEE‑PILOT<br>Admin</h2>
+        <ul>
+            <li><a href="{{ url_for('create_quiz') }}">➕ Create Quiz</a></li>
+            <li><a href="#quizzes">📚 All Quizzes</a></li>
+            <li><a href="{{ url_for('logout') }}" class="logout">Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Admin Dashboard</h1>
+            <p>Manage quizzes, questions and more.</p>
+        </header>
+
+        <section id="quizzes" class="quiz-list">
+            <h2>Your Quizzes</h2>
+
+            {% for q in quizzes %}
+            <div class="quiz-card">
+                <h3>{{ q.title }}</h3>
+                <p>{{ q.description }}</p>
+                <div class="actions">
+                    <a href="{{ url_for('edit_quiz', quiz_id=q['quiz_id']) }}" class="btn edit">Edit</a>
+                    <a href="{{ url_for('add_question', quiz_id=q['quiz_id']) }}" class="btn add">Add Question</a>
+                </div>
+            </div>
+            {% endfor %}
+
+        </section>
+    </div>
+</body>
+</html>
